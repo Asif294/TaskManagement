@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div class='p-2 gap-2 d-flex' style="width:80%; margin: auto;">
+    {% for task in deta %}
+    <div class="col-sm-3 mb-3 mb-sm-0">
+      <div class="card mx-2">
+        <div class="card-body">
+          <h4 class="card-title">ID : {{ task.id }}</h4>
+          <h5 class="card-text">{{ task.date }}</h5>
+          <p>{{ task.description }}</p>
+          <p>
+            Category:
+            {% for category in task.category.all %}
+            <button class="btn btn-primary sm m-1" disabled>{{ category.category_name }}</button>
+            {% endfor %}
+          </p>
+          {% if not task.is_complete %}
+          <a href="{% url 'edit_tesk' task.id %}" class="btn btn-primary">Edit</a>
+          <a href="{% url 'delete_tesk' task.id %}" class="btn btn-danger">Delete</a>
+          {% else %}
+          <button class="btn btn-success " disabled>Completed</button>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}
